@@ -1,28 +1,21 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
 
-  # GET /tasks
-  # GET /tasks.json
   def index
     @tasks = Task.all
   end
 
-  # GET /tasks/1
-  # GET /tasks/1.json
   def show
   end
 
-  # GET /tasks/new
   def new
-    @task = Task.new
+    @task = Task.new(status: 1)
   end
 
-  # GET /tasks/1/edit
   def edit
+    @task.status = 2
   end
 
-  # POST /tasks
-  # POST /tasks.json
   def create
     @task = Task.new(task_params)
 
@@ -37,10 +30,9 @@ class TasksController < ApplicationController
     end
   end
 
-  # PATCH/PUT /tasks/1
-  # PATCH/PUT /tasks/1.json
   def update
     respond_to do |format|
+      #if @task.update(title: params[:title], status: 2)
       if @task.update(task_params)
         format.html { redirect_to @task, notice: 'Task was successfully updated.' }
         format.json { render :show, status: :ok, location: @task }
@@ -51,8 +43,6 @@ class TasksController < ApplicationController
     end
   end
 
-  # DELETE /tasks/1
-  # DELETE /tasks/1.json
   def destroy
     @task.destroy
     respond_to do |format|
